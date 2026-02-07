@@ -487,17 +487,52 @@ function resetarSalaCompleto(silencioso = false) {
     });
 }
 
-// Upload Avatar com Validação
+// Upload Avatar com Compressão
 document.getElementById('avatar').addEventListener('change', function(e) {
     const file = e.target.files[0];
     if(file){
-        // Validação de tamanho (ex: 2MB)
-        if (file.size > 2 * 1024 * 1024) return alert("Imagem muito grande! Máximo 2MB.");
+        // Validação de tipo
+        if (!file.type.startsWith('image/')) {
+            return alert("Por favor, selecione um arquivo de imagem válido.");
+        }
+        
+        // Validação de tamanho original
+        if (file.size > 5 * 1024 * 1024) {
+            return alert("Imagem muito grande! Máximo 5MB. Tente comprimir.");
+        }
         
         const reader = new FileReader();
-        reader.onload = () => {
-            avatarBase64 = reader.result;
-            document.getElementById("preview-avatar").innerText = "Foto carregada: " + file.name;
+        reader.onload = (e) => {
+            // Criar imagem para redimensiolomar
+            const img = new Image();
+            img.onload = () => {
+                // Redimensionar para máximo 300x300
+                const canvas = document.createElement('canvas');
+                let width = img.width;
+                let height = img.height;
+                
+                if (width > height) {
+                    if (width > 300) {
+                        height *= 300 / width;
+                        width = 300;
+                    }
+                } else {
+                    if (height > 300) {
+                        width *= 300 / height;
+                        height = 300;
+                    }
+                }
+                
+                canvas.width = width;
+                canvas.height = height;
+                const ctx = canvas.getContext('2d');
+                ctx.drawImage(img, 0, 0, width, height);
+                
+                // Converter para base64 com qualidade reduzida
+                avatarBase64 = canvas.toDataURL('image/jpeg', 0.7);
+                document.getElementById("preview-avatar").innerText = "✅ Foto carregada: " + file.name;
+            };
+            img.src = e.target.result;
         };
         reader.readAsDataURL(file);
     }
