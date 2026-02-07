@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Roda de Perguntas Online</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h1>O que você faria se...</h1>
+
+  <div id="area-login" class="formulario">
+    <h3>Entrar na Roda</h3>
+    <input id="nome" placeholder="Seu apelido" maxlength="15">
+    
+    <label for="avatar" class="file-label">Escolher Foto</label>
+    <input id="avatar" type="file" accept="image/*">
+    
+    <p>Escolha sua cor:</p>
+    <div class="cores" id="cores"></div>
+    
+    <button onclick="entrarNoJogo()" id="btn-entrar">Entrar na Sala</button>
+  </div>
+
+  <div id="area-jogo" style="display:none;">
+    
+    <div class="mesa-container">
+        <div id="linha1" class="linha"></div>
+        <div id="linha2" class="linha"></div>
+    </div>
+
+    <div class="painel-controle">
+        <button onclick="resetarSala()" class="btn-reset">Reiniciar Jogo (Limpar Sala)</button>
+    </div>
+
+    <div class="formulario">
+      <input id="pergunta" placeholder="Digite sua pergunta: 'O que você faria se...'">
+      <button onclick="enviarPergunta()">Enviar Pergunta</button>
+    </div>
+
+    <div class="feed" id="feed">
+      <h2>Histórico</h2>
+      <div id="lista-posts"></div>
+    </div>
+  </div>
+
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore-compat.js"></script>
+
+  <script src="script.js"></script>
+</body>
+</html>

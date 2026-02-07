@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Roda de Perguntas</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h1>O que você faria se...</h1>
+    <!-- Cadastro dos jogadores -->
+  <!-- Removi os 'onclick' e mudei o script para module -->
+  <div class="formulario">
+    <input id="nome" placeholder="Nome do jogador">
+    <input id="avatar" type="file" accept="image/*">
+    <div class="cores" id="cores"></div>
+    <button id="btnAdicionar">Adicionar Jogador</button>
+  </div>
+
+  <div id="roda" class="linha"></div> <!-- Usei uma div única para facilitar o círculo -->
+
+  <div class="formulario">
+    <input id="pergunta" placeholder="O que você faria se...">
+    <button id="btnPergunta">Enviar Pergunta</button>
+  </div>
+
+  <div class="feed" id="feed">
+    <h2>Feed do Jogo</h2>
+    <div id="listaMensagens"></div>
+  </div>
+
+  <!-- OBRIGATÓRIO: type="moduleteste" -->
+  <script type="module" src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Roda de Perguntas</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  
+  <button onclick="resetarSalaCompleto()" class="btn-reset-global" title="Limpar sala e reiniciar">
+      ⚠️ RESETAR SALA
+  </button>
+
+  <h1>O que você faria se...</h1>
+
+  <div id="area-login" class="formulario">
+    <h2>Entre no Jogo</h2>
+    <input type="text" id="nome" placeholder="Seu Apelido (Max 15)" maxlength="15">
+    
+    <p>Escolha sua cor (ou a cinza para Espectador):</p>
+    <div id="cores" class="cores"></div>
+    
+    <label class="file-label" for="avatar">📷 Escolher Foto</label>
+    <input type="file" id="avatar" accept="image/*">
+    <div id="preview-avatar" style="margin:5px; font-size:12px; color:green;"></div>
+    
+    <div style="margin-top: 20px;">
+        <button id="btn-entrar" onclick="processarEntrada()">Escolha uma cor</button>
+    </div>
+  </div>
+
+  <div id="area-jogo" style="display:none;">
+    
+    <div class="painel-controle-topo">
+        <button onclick="sairDoJogo()" class="btn-sair">Sair da Sala</button>
+    </div>
+
+    <div id="area-espectadores" class="plateia-container" style="display:none;">
+        <h3>Plateia (<span id="count-specs">0</span>)</h3>
+        <div id="lista-espectadores" class="lista-plateia"></div>
+    </div>
+
+    <div id="painel-status" class="painel-central">
+        <h2 id="status-titulo">Carregando...</h2>
+        <p id="instrucao-vez"></p>
+        <div id="quem-vez" style="display:none; margin-top:15px; padding:10px; background:#fff3cd; border-radius:5px; font-weight:bold;">
+            🎤 Quem está falando: <span id="nome-vez" style="color:#ff6b6b;"></span>
+        </div>
+    </div>
+
+    <div class="mesa-container">
+        <div id="linha1" class="linha"></div>
+        <div id="linha2" class="linha"></div>
+    </div>
+
+    <div id="controles-jogo" class="formulario">
+        <div id="fase-pergunta" style="display:none;">
+            <input id="input-pergunta" placeholder="Escreva sua pergunta...">
+            <button onclick="enviarPergunta()">Enviar Pergunta</button>
+        </div>
+        
+        <div id="fase-resposta" style="display:none;">
+            <p id="texto-pergunta-recebida" style="font-weight:bold; color:#007bff;"></p>
+            <input id="input-resposta" placeholder="Escreva sua resposta...">
+            <button onclick="enviarResposta()">Enviar Resposta</button>
+        </div>
+
+        <div id="fase-revelacao" style="display:none;">
+            <button id="btn-ler-pergunta" onclick="lerPergunta()" style="display:none;">Ler Pergunta</button>
+            <button id="btn-ler-resposta" onclick="lerResposta()" style="display:none;">Ler Resposta</button>
+            <p id="aviso-espera" style="color:gray; display:none;">Aguarde a leitura...</p>
+        </div>
+
+        <button id="btn-iniciar" onclick="iniciarRodada()" style="display:none; background:#28a745;">Começar Jogo</button>
+    </div>
+
+    <div class="feed" id="feed">
+        <div id="lista-posts"></div>
+    </div>
+  </div>
+
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore-compat.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>

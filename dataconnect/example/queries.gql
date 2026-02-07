@@ -1,0 +1,38 @@
+mutation CreateGameRoom($name: String!) @auth(level: USER) {
+  gameRoom_insert(data: {
+    name: $name,
+    hostUserId_expr: "auth.uid",
+    createdAt_expr: "request.time"
+  })
+}
+
+query ListGameRooms @auth(level: PUBLIC, insecureReason: "This operation is safe to expose to the public") {
+  gameRooms {
+    id
+    name
+    hostUser {
+      id
+      username
+    }
+  }
+}
+
+mutation CreateQuestion($gameRoomId: UUID!, $text: String!) @auth(level: USER) {
+  question_insert(data: {
+    gameRoomId: $gameRoomId,
+    text: $text,
+    userId_expr: "auth.uid",
+    createdAt_expr: "request.time"
+  })
+}
+
+query ListQuestionsForGameRoom($gameRoomId: UUID!) @auth(level: USER) {
+  questions(where: {gameRoomId: {eq: $gameRoomId}}) {
+    id
+    text
+    user {
+      id
+      username
+    }
+  }
+}

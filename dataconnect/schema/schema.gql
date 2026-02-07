@@ -1,0 +1,37 @@
+type User @table {
+  username: String!
+  avatarUrl: String
+  createdAt: Timestamp!
+}
+
+type GameRoom @table {
+  name: String!
+  createdAt: Timestamp!
+  hostUser: User!
+  status: String
+}
+
+type Question @table {
+  text: String!
+  createdAt: Timestamp!
+  user: User!
+  gameRoom: GameRoom!
+}
+
+type Answer @table {
+  text: String!
+  createdAt: Timestamp!
+  user: User!
+  question: Question!
+  gameRoom: GameRoom!
+}
+
+type GameTurn @table {
+  turnOrder: Int!
+  questionReader: User!
+  answerReader: User!
+  createdAt: Timestamp!
+  gameRoom: GameRoom!
+  question: Question!
+  answer: Answer!
+}

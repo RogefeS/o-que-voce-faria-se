@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Roda de Perguntas</title>
+  <style>
+    body { font-family: Arial, sans-serif; text-align: center; }
+    .linha { display: flex; justify-content: center; align-items: center; }
+    .jogador { 
+      margin: 10px; 
+      text-align: center; 
+      display: flex; 
+      flex-direction: column; 
+      align-items: center; 
+      position: relative; 
+    }
+    .jogador img { width: 80px; height: 80px; border-radius: 50%; }
+    .nome { font-size: 22px; font-weight: bold; font-family: "Comic Sans MS", cursive, sans-serif; margin-top: 5px; }
+    .bloco { display: flex; align-items: center; }
+    .seta { font-size: 28px; margin: 0 10px; }
+    .remover {
+      position: absolute;
+      top: -5px;
+      right: -5px;
+      background: #ff4d4d;
+      color: white;
+      border: none;
+      border-radius: 50%;
+      width: 20px;
+      height: 20px;
+      cursor: pointer;
+      font-size: 14px;
+      line-height: 18px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      box-shadow: 0 0 3px rgba(0,0,0,0.3);
+      transition: transform 0.2s;
+    }
+    .remover:hover {
+      transform: scale(1.2);
+      background: #e60000;
+    }
+    .feed { border: 1px solid #ccc; padding: 10px; max-width: 500px; margin: 20px auto; background: #f9f9f9; }
+    .post { border-bottom: 1px solid #eee; padding: 10px; text-align: left; }
+    .formulario { margin: 20px; }
+    input, button { padding: 8px; margin: 5px; }
+  </style>
+</head>
+<body>
+  <h1>O que você faria se...</h1>
+
+  <!-- Cadastro dos jogadores -->
+  <div class="formulario">
+    <input id="nome" placeholder="Nome do jogador">
+    <input id="avatar" type="file" accept="image/*">
+    <button onclick="addJogador()">Adicionar Jogador</button>
+  </div>
+
+  <!-- Roda visual -->
+  <div id="linha1" class="linha"></div>
+  <div id="linha2" class="linha"></div>
+
+  <!-- Área de perguntas -->
+  <div class="formulario">
+    <input id="pergunta" placeholder="Digite sua pergunta">
+    <button onclick="addPergunta()">Enviar Pergunta</button>
+  </div>
+
+  <!-- Feed de respostas -->
+  <div class="feed" id="feed">
+    <h2>Respostas</h2>
+  </div>
+
+  <script>
+    let jogadores = [];
+    let perguntas = [];
+
+    function addJogador() {
+      let nome = document.getElementById("nome").value;
+      let avatarInput = document.getElementById("avatar");
+      let avatarURL = avatarInput.files[0] ? URL.createObjectURL(avatarInput.files[0]) : null;
+      jogadores.push({nome, avatar: avatarURL});
+      renderRoda();
+      document.getElementById("nome").value = "";
+      avatarInput.value = "";
+    }
+
+    function removerJogador(index) {
+      jogadores.splice(index, 1);
+      renderRoda();
+    }
+
+    function renderRoda() {
+      let linha1 = document.getElementById("linha1");
+      let linha2 = document.getElementById("linha2");
+      linha1.innerHTML = "";
+      linha2.innerHTML = "";
+
+      let metade = Math.ceil(jogadores.length / 2);
+      let cima = jogadores.slice(0, metade);
+      let baixo = jogadores.slice(metade).reverse();
+
+      // Linha de cima (esquerda → direita)
+      cima.forEach((j, i) => {
+        linha1.innerHTML += `
+          <div class="bloco">
+            <div class="jogador">
+              ${j.avatar ? `<img src="${j.avatar}">` : ""}
+              <div class="nome">${j.nome}</div>
+              <button class="remover" onclick="removerJogador(${i})">×</button>
+            </div>
+            ${i < cima.length - 1 ? '<div class="seta">➡️</div>' : '<div class="seta">⬇️</div>'}
+          </div>
+        `;
+      });
+
+      // Linha de baixo (direita → esquerda)
+      baixo.forEach((j, i) => {
+        let originalIndex = jogadores.length - 1 - i;
+        linha2.innerHTML += `
+          <div class="bloco">
+            ${i === 0 ? '<div class="seta">⬆️</div>' : '<div class="seta">⬅️</div>'}
+            <div class="jogador">
+              ${j.avatar ? `<img src="${j.avatar}">` : ""}
+              <div class="nome">${j.nome}</div>
+              <button class="remover" onclick="removerJogador(${originalIndex})">×</button>
+            </div>
+          </div>
+        `;
+      });
+    }
+
+    function addPergunta() {
+      let p = document.getElementById("pergunta").value;
+      if (p && jogadores.length > 1) {
+        perguntas.push(p);
+        let autor = jogadores[perguntas.length % jogadores.length].nome;
+        let respondente = jogadores[(perguntas.length) % jogadores.length].nome;
+        adicionarPost(p, "Resposta pendente...", autor, respondente);
+        document.getElementById("pergunta").value = "";
+      }
+    }
+
+    function adicionarPost(pergunta, resposta, autor, respondente) {
+      let feed = document.getElementById("feed");
+      feed.innerHTML += `
+        <div class="post">
+          <b>${autor}</b> perguntou: "${pergunta}"<br>
+          <b>${respondente}</b> respondeu: "${resposta}"
+        </div>`;
+    }
+  </script>
+</body>
+</html>

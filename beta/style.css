@@ -1,0 +1,205 @@
+/* Configuração Geral e Centralização */
+body { 
+    font-family: Arial, sans-serif; 
+    text-align: center; 
+    background: linear-gradient(135deg, #f0f0f0, #dcdcdc); 
+    min-height: 100vh; 
+    margin: 0; 
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Centraliza horizontalmente */
+}
+
+h1 {
+    font-size: clamp(1.5rem, 5vw, 2.5rem);
+    margin: 10px 0;
+}
+
+/* Container da Mesa - Ocupa o máximo de espaço sem quebrar */
+.mesa-container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 10px auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow-x: hidden; /* Evita scroll lateral */
+}
+
+.linha { 
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
+    min-height: 120px;
+    width: 100%;
+    flex-wrap: nowrap; /* Impede que os jogadores pulem de linha */
+}
+
+/* Jogador e Bloco Adaptáveis */
+.bloco { 
+    display: flex; 
+    align-items: center; 
+    flex-shrink: 1; /* Permite encolher se necessário */
+}
+
+.jogador { 
+    margin: 5px; 
+    text-align: center; 
+    display: flex; 
+    flex-direction: column; 
+    align-items: center; 
+    position: relative; 
+    background: #fff; 
+    padding: 10px; 
+    border-radius: 10px; 
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    width: 100px; /* Tamanho base desktop */
+    transition: all 0.3s ease;
+}
+
+.jogador img { 
+    width: 70px; 
+    height: 70px; 
+    border-radius: 50%; 
+    object-fit: cover; 
+    border: 3px solid #ddd;
+}
+
+.nome { 
+    font-size: 14px; 
+    font-weight: bold; 
+    font-family: "Comic Sans MS", cursive, sans-serif; 
+    margin-top: 5px; 
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 90px;
+}
+
+.seta { 
+    font-size: 24px; 
+    margin: 0 5px; 
+    color: #555; 
+    flex-shrink: 0;
+}
+
+/* Formulários e Feed subindo */
+.formulario { 
+    background: white; 
+    padding: 15px; 
+    border-radius: 10px; 
+    width: 90%;
+    max-width: 500px; 
+    margin: 10px auto; 
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    z-index: 10;
+}
+
+input { padding: 10px; margin: 5px; width: 80%; border: 1px solid #ccc; border-radius: 5px;}
+
+button { 
+    padding: 10px 20px; 
+    margin: 5px; 
+    cursor: pointer; 
+    background: #007bff; 
+    color: white; 
+    border: none; 
+    border-radius: 5px; 
+    font-weight: bold;
+}
+
+/* Paleta de Cores */
+.cores { display: flex; justify-content: center; margin: 10px; flex-wrap: wrap; }
+.cor {
+    width: 30px; height: 30px; margin: 4px; cursor: pointer;
+    border-radius: 50%; border: 3px solid #fff;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+.cor.selecionada { border: 3px solid #333; transform: scale(1.1); }
+.cor.indisponivel { opacity: 0.1; cursor: not-allowed; }
+
+/* Feed de Respostas */
+.feed { 
+    border: 1px solid #ccc; 
+    padding: 10px; 
+    width: 90%;
+    max-width: 600px; 
+    margin: 10px auto; 
+    background: #fff; 
+    border-radius: 10px; 
+}
+
+.post { border-bottom: 1px solid #eee; padding: 10px; text-align: left; font-size: 14px; }
+
+/* --- RESPONSIVIDADE (A MÁGICA) --- */
+
+/* Quando a tela for menor que a largura da roda (ex: celulares) */
+@media (max-width: 650px) {
+    .jogador {
+        width: 15vw; /* O jogador passa a ocupar largura baseada na tela */
+        min-width: 60px;
+        padding: 5px;
+    }
+    
+    .jogador img {
+        width: 10vw;
+        height: 10vw;
+        min-width: 40px;
+        min-height: 40px;
+    }
+
+    .nome {
+        font-size: 10px;
+        max-width: 14vw;
+    }
+
+    .seta {
+        font-size: 16px;
+        margin: 0 2px;
+    }
+
+    .linha {
+        min-height: 90px;
+    }
+}
+
+/* Ajuste extra para telas muito pequenas (iPhone SE / dobráveis) */
+@media (max-width: 350px) {
+    .jogador { width: 55px; }
+    .seta { font-size: 12px; }
+    .formulario { padding: 10px; }
+}
+
+.file-label {
+    display: inline-block;
+    padding: 6px 12px;
+    cursor: pointer;
+    background-color: #eee;
+    border-radius: 4px;
+    margin: 5px;
+    font-size: 0.8em;
+}
+#avatar { display: none; }
+.btn-reset { background: #dc3545; font-size: 11px; padding: 5px 10px; }
+
+.painel-central {
+    background: #333;
+    color: white;
+    padding: 15px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+}
+.jogador.ativo {
+    border: 5px solid #ffcc00 !important;
+    transform: scale(1.1);
+    box-shadow: 0 0 15px #ffcc00;
+}
+.jogador.pronto::after {
+    content: "✅";
+    position: absolute;
+    top: -10px;
+    left: -10px;
+    font-size: 20px;
+}
+#instrucao-vez { font-weight: bold; color: #ffcc00; }

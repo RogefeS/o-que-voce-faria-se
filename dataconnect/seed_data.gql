@@ -1,0 +1,84 @@
+mutation CreateDemoData @transaction @auth(level: USER, insecureReason: "This operation is safe to expose to all logged in users.") {
+  user_insertMany(data: [
+    {
+      id: "550e8400-e29b-41d4-a716-446655440000",
+      username: "demouser1",
+      createdAt: "2024-04-26T12:00:00Z"
+    },
+    {
+      id: "550e8400-e29b-41d4-a716-446655440001",
+      username: "demouser2",
+      createdAt: "2024-04-26T12:00:00Z"
+    }
+  ])
+  gameRoom_insertMany(data: [
+    {
+      id: "660e8400-e29b-41d4-a716-446655440000",
+      hostUserId: "550e8400-e29b-41d4-a716-446655440000",
+      name: "Demo Game Room 1",
+      createdAt: "2024-04-26T12:00:00Z"
+    },
+    {
+      id: "660e8400-e29b-41d4-a716-446655440001",
+      hostUserId: "550e8400-e29b-41d4-a716-446655440001",
+      name: "Demo Game Room 2",
+      createdAt: "2024-04-26T12:00:00Z"
+    }
+  ])
+  question_insertMany(data: [
+    {
+      id: "770e8400-e29b-41d4-a716-446655440000",
+      gameRoomId: "660e8400-e29b-41d4-a716-446655440000",
+      userId: "550e8400-e29b-41d4-a716-446655440000",
+      text: "Demo Question 1",
+      createdAt: "2024-04-26T12:00:00Z"
+    },
+    {
+      id: "770e8400-e29b-41d4-a716-446655440001",
+      gameRoomId: "660e8400-e29b-41d4-a716-446655440001",
+      userId: "550e8400-e29b-41d4-a716-446655440001",
+      text: "Demo Question 2",
+      createdAt: "2024-04-26T12:00:00Z"
+    }
+  ])
+  answer_insertMany(data: [
+    {
+      id: "880e8400-e29b-41d4-a716-446655440000",
+      gameRoomId: "660e8400-e29b-41d4-a716-446655440000",
+      questionId: "770e8400-e29b-41d4-a716-446655440000",
+      userId: "550e8400-e29b-41d4-a716-446655440000",
+      text: "Demo Answer 1",
+      createdAt: "2024-04-26T12:00:00Z"
+    },
+    {
+      id: "880e8400-e29b-41d4-a716-446655440001",
+      gameRoomId: "660e8400-e29b-41d4-a716-446655440001",
+      questionId: "770e8400-e29b-41d4-a716-446655440001",
+      userId: "550e8400-e29b-41d4-a716-446655440001",
+      text: "Demo Answer 2",
+      createdAt: "2024-04-26T12:00:00Z"
+    }
+  ])
+  gameTurn_insertMany(data: [
+    {
+      id: "990e8400-e29b-41d4-a716-446655440000",
+      answerId: "880e8400-e29b-41d4-a716-446655440000",
+      answerReaderId: "550e8400-e29b-41d4-a716-446655440001",
+      gameRoomId: "660e8400-e29b-41d4-a716-446655440000",
+      questionId: "770e8400-e29b-41d4-a716-446655440000",
+      questionReaderId: "550e8400-e29b-41d4-a716-446655440000",
+      turnOrder: 1,
+      createdAt: "2024-04-26T12:00:00Z"
+    },
+    {
+      id: "990e8400-e29b-41d4-a716-446655440001",
+      answerId: "880e8400-e29b-41d4-a716-446655440001",
+      answerReaderId: "550e8400-e29b-41d4-a716-446655440000",
+      gameRoomId: "660e8400-e29b-41d4-a716-446655440001",
+      questionId: "770e8400-e29b-41d4-a716-446655440001",
+      questionReaderId: "550e8400-e29b-41d4-a716-446655440001",
+      turnOrder: 1,
+      createdAt: "2024-04-26T12:00:00Z"
+    }
+  ])
+}

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Roda de Perguntas Online</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h1>O que você faria se...</h1>
+
+  <div id="area-login" class="formulario">
+    <h3>Entrar na Roda</h3>
+    <input id="nome" placeholder="Seu apelido" maxlength="15">
+    
+    <label for="avatar" class="file-label">Escolher Foto</label>
+    <input id="avatar" type="file" accept="image/*">
+    
+    <p>Escolha sua cor:</p>
+    <div class="cores" id="cores"></div>
+    
+    <button onclick="entrarNoJogo()" id="btn-entrar">Entrar na Sala</button>
+  </div>
+
+  <div id="area-jogo" style="display:none;">
+    
+    <div id="painel-status" class="painel-central">
+        <h2 id="status-titulo">Aguardando Jogadores...</h2>
+        <p id="instrucao-vez"></p>
+    </div>
+
+    <div class="mesa-container">
+        <div id="linha1" class="linha"></div>
+        <div id="linha2" class="linha"></div>
+    </div>
+
+    <div id="controles-jogo" class="formulario">
+        <div id="fase-pergunta" style="display:none;">
+            <input id="input-pergunta" placeholder="O que você faria se...">
+            <button onclick="enviarPergunta()">Enviar Minha Pergunta</button>
+        </div>
+
+        <div id="fase-resposta" style="display:none;">
+            <p id="texto-pergunta-recebida"></p>
+            <input id="input-resposta" placeholder="Eu faria...">
+            <button onclick="enviarResposta()">Enviar Minha Resposta</button>
+        </div>
+
+        <div id="fase-revelacao" style="display:none;">
+            <button id="btn-ler-pergunta" onclick="lerPergunta()" style="display:none;">Ler Pergunta</button>
+            <button id="btn-ler-resposta" onclick="lerResposta()" style="display:none;">Ler Resposta</button>
+        </div>
+
+        <button id="btn-iniciar" onclick="iniciarRodada()" style="display:none; background: #28a745;">Começar Jogo</button>
+        <button id="btn-reset" onclick="resetarSala()" class="btn-reset">Reiniciar Sala</button>
+    </div>
+
+    <div class="feed" id="feed">
+        <h3>Histórico da Rodada</h3>
+        <div id="lista-posts"></div>
+    </div>
+</div>
+
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore-compat.js"></script>
+
+  <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Roda de Perguntas</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h1>O que você faria se...</h1>
+
+  <!-- Cadastro dos jogadores -->
+  <div class="formulario">
+    <input id="nome" placeholder="Nome do jogador">
+    <input id="avatar" type="file" accept="image/*">
+    <div class="cores" id="cores"></div>
+    <button onclick="addJogador()">Adicionar Jogador</button>
+  </div>
+
+  <!-- Roda visual -->
+  <div id="linha1" class="linha"></div>
+  <div id="linha2" class="linha"></div>
+
+  <!-- Área de perguntas -->
+  <div class="formulario">
+    <input id="pergunta" placeholder="Digite sua pergunta">
+    <button onclick="addPergunta()">Enviar Pergunta</button>
+  </div>
+
+  <!-- Feed de respostas -->
+  <div class="feed" id="feed">
+    <h2>Respostas</h2>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
